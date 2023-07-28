@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>[ 🎆회원가입🎆 ]</title>
+<script>
+	function check() {
+		let memberid = document.getElementById('memberid').value;
+		let memberpw = document.getElementById('memberpw').value;
+		
+		if(memberid.length>10 || memberid.length<3) {
+			alert('id는 3~10자로 입력해주세요.');
+			return false;
+		}
+		else if(memberpw.length>10 || memberpw.length<3) {
+			alert('비밀번호는 3~10자로 입력해주세요.');
+			return false;
+		}
+		else if(membername.length == 0){
+			alert('이름을 입력하세요.');	
+			return false;		
+		}
+		else if(phone.length == 0){
+			alert('전화번호를 입력하세요.');
+			return false;
+		}
+		else return true; 
+	}
+
+</script>
+</head>
+<body>
+    <h1> 🎆<mark>회원가입</mark>🎆 </h1>
+    
+    <form th:action="@{/member/join}" method="post" onsubmit="return check()">
+	<table>
+		<tr>
+			<th>ID</th>
+			<td>
+				<input type="text" name="memberid" id="memberid" required="required">
+			</td>
+		</tr>
+		<tr>
+			<th>비밀번호</th>
+			<td>
+				<input type="password" name="memberpw" id="memberpw" required="required">
+			</td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td><input type="text" name="membername" id="membername" required="required"></td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td><input type="text" name="phone" id="phone"></td>
+		</tr>
+		<tr><td colspan="2" align="center"><input type="submit" value="가입">&nbsp<input type="submit" value="다시 쓰기"></td></tr>
+	</table>
+		
+	</form>
+	
+</body>
+</html>

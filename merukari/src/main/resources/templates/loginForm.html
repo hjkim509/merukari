@@ -8,10 +8,28 @@
 </style>
 </head>
 <body>
-	<h1>[ 로그인 ]</h1>
-	
-		<form>
-
-		</form>
+	<h1>[ ✨로그인✨ ]</h1>
+	<form id="loginform" th:action="@{/member/login}" method="post">
+		<table>
+			<tr>
+				<td>ID</td>
+				<td><input type="text" name="memberid"></td>
+			</tr>
+			<tr>
+				<td>PW</td>  
+				<td><input type="password" name="memberpw"></td>
+			</tr>
+		</table>
+		<br>
+		<input type="submit" value="Login"><br>
+	</form>
+	<div th:if="${param.error}" style="color:red; text-align:center;">
+			<p>ID 또는 비밀번호가 틀렸습니다.</p>
+	</div>
+	<div th:if="${param.error}">
+		<script>
+			alert('에러');
+		</script>
+	</div>
 </body>
 </html>

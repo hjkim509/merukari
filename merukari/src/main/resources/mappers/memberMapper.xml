@@ -18,7 +18,7 @@
 		, #{phone})
 </insert>
 <!-- 회원로그인 시도 -->
-<select id="loginMember" parameterType="Member">
+<select id="memberLogin" parameterType="Member">
 	select count(*)
 	from market_member
 	where memberid = #{memberid}

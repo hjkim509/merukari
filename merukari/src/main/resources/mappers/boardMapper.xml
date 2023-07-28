@@ -2,13 +2,74 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.softsociety.exam.dao.BoardDAO">
+<mapper namespace="net.softsociety.merukari.dao.BoardDAO">
+<!-- 판매 목록 보기, 판매되지 않은 게시물만 보이기 -->
+<select id="boardList" resultType="Board">
+select boardnum, title, memberid
+from merukari_board
+where soldout = 'N'
+order by boardnum desc
+</select>
 
 <!--판매글 저장 -->
-<insert id="insertBoard" parameterType="Board">
-
+<insert id="boardInsert" parameterType="Board">
+insert into merukari_board(boardnum, memberid, title, contents, category)
+values(merukari_board_seq.nextval, #{memberid}, #{title}, #{contents}, #{category})
 </insert>
 
 
+<!-- 판매 정보 읽기 -->
+<select id="boardRead" resultType="Board">
+select boardnum
+	, memberid
+	, to_char(inputdate, 'yy/mm/dd hh24:mi:ss') inputdate
+	, title
+	, contents
+from merukari_board
+where boardnum = #{boardnum}
+</select>
 
+<!-- 판매정보 구매하기 -->
+<update id="boardPurchase" parameterType="Board">
+update merukari_board
+set soldout='Y', buyerid = #{buyerid}
+where boardnum = #{boardnum}
+</update>
+<!-- 판매정보 삭제 -->
+<delete id="boardDelete" parameterType="Board">
+delete from merukari_board
+where boardnum = #{boardnum} and memberid = #{memberid}
+</delete>
+
+<!-- 판매정보 검색 -->
+<select id="boardSearch" parameterType="Board" resultType="Board">
+    select *
+    from merukari_board
+    <where>
+        <if test="category != 'all'">
+            category = #{category} 
+        </if>
+        <if test="category != 'all' and title != 'null'">
+            and 
+        </if>
+        <if test="title != 'null'">
+            title like '%' || #{title} || '%'
+        </if>
+    </where>
+    order by boardnum desc
+</select>
+
+<!-- reply구문 -->
+<!-- 댓글쓰기 -->
+<insert id="replyInsert" parameterType="Reply">
+insert into market_reply(replynum, boardnum, memberid, replytext)
+values (market_reply_seq.nextval, #{boardnum}, #{memberid}, #{replytext})
+</insert>
+<!-- 해당 게시물 댓글 읽기 -->
+<select id="replyList" resultType="Reply">
+select * 
+from market_reply
+where boardnum = #{boardnum}
+order by replynum desc
+</select>
 </mapper>

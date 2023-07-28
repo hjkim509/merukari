@@ -8,5 +8,4 @@ import lombok.NoArgsConstructor;
  * 리플 정보
  */
 public class Reply {
-
 }

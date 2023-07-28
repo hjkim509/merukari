@@ -6,14 +6,23 @@
 
 <!-- 회원정보 저장 -->
 <insert id="memberInsert" parameterType="Member">
-	insert into market_member(memberid, memberpw, membername, phone)
-	values(#{memberid}, #{memberpw}, #{membername}, #{phone})
+	insert into market_member(
+		memberid
+		, memberpw
+		, membername
+		, phone)
+	values(
+		#{memberid}
+		, #{memberpw}
+		, #{membername}
+		, #{phone})
 </insert>
 <!-- 회원로그인 시도 -->
 <select id="loginMember" parameterType="Member">
 	select count(*)
 	from market_member
-	where memberid = #{memberid} and memberpw = #{memberpw}
+	where memberid = #{memberid}
+		 and memberpw = #{memberpw}
 </select>
 
 </mapper>

@@ -2,21 +2,37 @@
 
 
 -- 회원정보 테이블
-create table market_member (
-
+create table merukari_member (
+	memberid			varchar2(20) primary key					--사용자 아이디
+	, memberpw			varchar2(100) not null						--암호화된 로그인 비밀번호
+	, membername  		varchar2(20) not null						--사용자 이름
+	, phone				varchar2(20) not null						--전화번호
+	, enabled			number(1) default 1 check(enabled in (0,1))						--계정 상태, 1:사용가능 0:사용불가
+	, rolename			varchar2(20) default 'ROLE_USER' check(rolename in ('ROLE_USER'))	--사용자 권한. 모두 'ROLE_USER'로 처리
 );
 
--- 판매글 테이블
-create table market_board (
-
+create table merukari_board (
+	boardnum	number primary key,			--글 번호
+	memberid	varchar2(20) not null,		--작성자 아이디
+	title		varchar2(200) not null,		--제목
+	contents	varchar2(2000) not null,	--상품 소개글 내용
+	inputdate	date default sysdate,		--작성일
+	category	varchar2(50),				--상품분류(cumputer/camera/car)
+	soldout		char(1) default 'N' check(soldout in ('N','Y')),			--판매완료여부(판매중:'N', 판매완료:'Y')
+	buyerid		varchar2(20) 				--구매자 아이디
 );
 
 --판매글 일련번호 시퀀스
+create SEQUENCE merukari_board_seq;
 
 -- 리플 테이블
-create table market_reply (
-
+create table merukari_reply (
+	replynum		number
+	, boardnum		number references merukari_board(boardnum) on delete cascade
+	, memberid		varchar2(20) not null
+	, replytext		varchar2(500)
+	, inputdate		date default sysdate
 );
 
 --리플 일련번호 시퀀스
-
+create sequence merukari_reply_seq;

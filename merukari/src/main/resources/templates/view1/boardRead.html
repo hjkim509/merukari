@@ -39,5 +39,6 @@
 		<p><a th:href="@{/board/buyItem(boardnum=${board.boardnum})}">구매하기</a><p>
 	</div>
 	
+	<input type="hidden" name="boardnum" th:value="${board.boardnum}">
 </body>
 </html>

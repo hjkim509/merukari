@@ -11,7 +11,8 @@ import net.softsociety.merukari.domain.Member;
 @Mapper
 public interface MemberDAO {
 
-	int join(Member m);
+	int memberInsert(Member m);
+	int loginMember(Member m);
 
 
 }

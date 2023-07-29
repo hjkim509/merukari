@@ -27,7 +27,7 @@ public class MemberSeviceImpl implements MemberService {
 		log.debug("암호화 후 : {}", pw);
 		
 		m.setMemberpw(pw);
-		int n = dao.join(m);
+		int n = dao.memberInsert(m);
 		return n;
 	}
 }
